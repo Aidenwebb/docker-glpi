@@ -9,5 +9,9 @@ build-image:
 run-image:
 	docker run -it --rm -p 8080:80 ${DOCKER_TAG}:${DOCKER_REVISION}
 
+.PHONY: start-mariadb-dev
+start-mariadb-dev:
+	docker run -it --rm -p 3306:3306 -e MYSQL_ROOT_PASSWORD=glpi -e MYSQL_DATABASE=glpi -e MYSQL_USER=glpi -e MYSQL_PASSWORD=glpi mariadb:10.7
+
 .PHONY: start-dev
-start-dev: build-image run-image
+start-dev: start-mariadb-dev build-image run-image 
