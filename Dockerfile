@@ -54,8 +54,11 @@ libsasl2-modules-db \
 WORKDIR /usr/local/src
 RUN curl -sSL https://github.com/glpi-project/glpi/releases/download/10.0.7/glpi-10.0.7.tgz -o glpi.tar.gz \
 && tar -xzf glpi.tar.gz \
-&& rm -f glpi.tar.gz \
-&& mv glpi /var/www/html
+&& rm -f glpi.tar.gz
+
+RUN cp -rp glpi /var/www/html
+
+WORKDIR /
 
 COPY /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
 
@@ -68,6 +71,9 @@ RUN a2enmod rewrite && service apache2 restart && service apache2 stop
 
 #Lancement du service apache au premier plan
 
+COPY /run.sh /run.sh
+RUN chmod +x /run.sh
+
 #Exposition des ports
 EXPOSE 80 443
-ENTRYPOINT ["apache2ctl", "-D", "FOREGROUND"]
+ENTRYPOINT ["/run.sh"]
