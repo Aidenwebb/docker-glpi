@@ -75,4 +75,4 @@ stop-dev: stop-mariadb stop-glpi remove-docker-dev-network remove-docker-dev-vol
 start-dev: create-docker-dev-network start-mariadb build-image start-glpi
 
 .PHONY: start-dev-persist
-start-dev-persist: docker-dev-network create-docker-dev-volume-mariadb create-docker-dev-volume-glpi start-mariadb-persist build-image run-image-dev-persist
+start-dev-persist: create-docker-dev-network create-docker-dev-volume-mariadb create-docker-dev-volume-glpi start-mariadb-persist build-image run-image-dev-persist
